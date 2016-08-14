@@ -15,7 +15,7 @@ const AppView = React.createClass({
 	},
 
 	_searchNumber: function(num,type){
-		return location.hash = `number/${num}/${type}`
+		return location.hash = `result/${num}/${type}`
 	},
 
 	render: function(){

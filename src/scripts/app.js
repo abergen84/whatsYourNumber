@@ -22,7 +22,7 @@ const NumberModel = Backbone.Model.extend({
 var Router = Backbone.Router.extend({
 	routes: {
 		"home": "goHome",
-		"number/:number/:type": "searchNumbers",
+		"result/:number/:type": "searchNumbers",
 		"*catchall": "routeHome"
 	},
 
