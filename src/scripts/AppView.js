@@ -31,10 +31,6 @@ const AppView = React.createClass({
 
 
 const Header = React.createClass({
-	
-	_handleOption: function(type){
-		console.log(type.target.value)
-	},
 
 	render: function(){
 		return (
@@ -68,9 +64,16 @@ const MainContainer = React.createClass({
 const Content = React.createClass({
 	render: function(){
 		console.log(this.props.numMod.attributes)
+		var date
+		if(!this.props.numMod.get('date')){
+			date = 'unknown'
+		} else {
+			date = this.props.numMod.get('date')
+		}
 		return (
 			<div className="content">
 				<h2>{this.props.numMod.get('number')}</h2>
+				<p>date: {date}</p>
 				<p>{this.props.numMod.get('text')}</p>
 			</div>
 			)
