@@ -2,17 +2,20 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Backbone from 'backbone'
 
-
 const AppView = React.createClass({
 	
 	_handleKey: function(e){
-		if(e.keyCode === 13){
-			this._searchNumber(e.target.value)
-		}
+		e.preventDefault()
+		// if(e.keyCode === 13){
+			// console.log(e.target.numberinput.value)
+			// console.log(e.target.select.value)
+			this._searchNumber(e.target.numberinput.value, e.target.select.value)
+			e.target.numberinput.value = ''
+		// }
 	},
 
-	_searchNumber: function(num){
-		return location.hash = `number/${num}`
+	_searchNumber: function(num,type){
+		return location.hash = `number/${num}/${type}`
 	},
 
 	render: function(){
@@ -28,11 +31,24 @@ const AppView = React.createClass({
 
 
 const Header = React.createClass({
+	
+	_handleOption: function(type){
+		console.log(type.target.value)
+	},
+
 	render: function(){
 		return (
 			<header id="mainHeader">
 				<h1>what's your number?</h1>
-				<input type="text" placeholder="type in a year" onKeyDown={this.props.handleKey} />
+				<form onSubmit={this.props.handleKey}>
+					<select name="select">
+						<option value="math">math</option>
+						<option value="year">year</option>
+						<option value="trivia">trivia</option>
+					</select>
+				<input type="text" placeholder="type in a year" ref="number" name="numberinput" />
+				<button type="submit">submit</button>
+				</form>
 			</header>
 			)
 	}
@@ -40,7 +56,7 @@ const Header = React.createClass({
 
 const MainContainer = React.createClass({
 	render: function(){
-		console.log(this)
+		console.log(this.props.numMod)
 		return (
 			<div id="MainContainer">
 				<Content numMod={this.props.numMod} />
@@ -51,10 +67,11 @@ const MainContainer = React.createClass({
 
 const Content = React.createClass({
 	render: function(){
-		console.log(this.props.numMod)
+		console.log(this.props.numMod.attributes)
 		return (
 			<div className="content">
-				{this.props.numMod}
+				<h2>{this.props.numMod.get('number')}</h2>
+				<p>{this.props.numMod.get('text')}</p>
 			</div>
 			)
 	}

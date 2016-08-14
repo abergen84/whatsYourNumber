@@ -7,21 +7,22 @@ const app = function() {
 
 const NumberModel = Backbone.Model.extend({
 	url: function(){
-		return "http://numbersapi.com/" + this.num + "/year?json"
+		return "http://numbersapi.com/" + this.num + "/" + this.type + "?json"
 	}, 
 	parse: function(rawJSON){
 		console.log(rawJSON.text)
-		return rawJSON.text
+		return rawJSON
 	},
-	initialize: function(num){
+	initialize: function(num,type){
 		this.num = num
+		this.type = type
 	}
 })
 
 var Router = Backbone.Router.extend({
 	routes: {
 		"home": "goHome",
-		"number/:number": "searchNumbers",
+		"number/:number/:type": "searchNumbers",
 		"*catchall": "routeHome"
 	},
 
@@ -34,11 +35,12 @@ var Router = Backbone.Router.extend({
 	},
 
 	goHome: function(){
-		ReactDOM.render(<AppView />,document.querySelector('.container'))			
+		var numMod = new NumberModel()
+		ReactDOM.render(<AppView numMod={numMod} />,document.querySelector('.container'))			
 	},
 
-	searchNumbers: function(num){
-		var numMod = new NumberModel(num)
+	searchNumbers: function(num,type){
+		var numMod = new NumberModel(num,type)
 		numMod.fetch().then(function(){
 			ReactDOM.render(<AppView numMod={numMod} />,document.querySelector('.container'))	
 		})
