@@ -66,14 +66,14 @@ const Content = React.createClass({
 		console.log(this.props.numMod.attributes)
 		var date
 		if(!this.props.numMod.get('date')){
-			date = 'unknown'
+			date = ''
 		} else {
-			date = this.props.numMod.get('date')
+			date = `date: ${this.props.numMod.get('date')}`
 		}
 		return (
 			<div className="content">
 				<h2>{this.props.numMod.get('number')}</h2>
-				<p>date: {date}</p>
+				<p>{date}</p>
 				<p>{this.props.numMod.get('text')}</p>
 			</div>
 			)
